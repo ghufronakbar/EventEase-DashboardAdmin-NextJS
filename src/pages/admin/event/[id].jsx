@@ -1,5 +1,5 @@
 import { HeadAdmin } from "@/components/HeadAdmin";
-import { FormEventEdit } from "@/components/form/FormEventEdit";
+import { DetailEvent } from "@/components/Detail/DetailEvent";
 import { Container, Flex } from "@chakra-ui/react";
 import Event from ".";
 import { withAuth } from "@/lib/authorization";
@@ -13,7 +13,7 @@ function EventID() {
         <Flex>
           <SidebarMenu flex={1} />
           <Container maxW="80%">
-            <FormEventEdit />
+            <DetailEvent />
           </Container>
         </Flex>
       </main>

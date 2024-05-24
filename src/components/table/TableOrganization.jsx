@@ -1,10 +1,10 @@
 import {
-  Alert,  
-  AlertIcon,  
+  Alert,
+  AlertIcon,
   Box,
   Button,
-  Center,  
-  Image,    
+  Center,
+  Image,
   Table,
   TableContainer,
   Tbody,
@@ -13,43 +13,38 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import axiosInstanceAuthorization from "../../lib/axiosInstanceAuthorization";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Loading } from "../Loading";
-import { primaryColor, secondaryColor, tersierColor } from "@/lib/color";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { primaryColor, tersierColor } from "@/lib/color";
 import { useSearchParams } from "next/navigation";
-import { formatDate } from "@/lib/formatDate";
 
-export function TableEvent() {
-  const router = useRouter();  
+export function TableOrganization() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const queryTime = searchParams.get("time");
   const queryStatus = searchParams.get("status");
 
   const {
-    data: dataEvent,
+    data: dataOrg,
     isLoading,
     isError,
-    refetch: refetchDataEvent,
+    refetch: refetchDataOrg,
   } = useQuery({
-    queryKey: ["events", queryTime, queryStatus],
+    queryKey: ["organizations", queryStatus],
     queryFn: async () => {
       const endpoint =
-        queryTime == "" && queryStatus == ""
-          ? "/events"
-          : `/events?time=${queryTime}&status=${queryStatus}`;
+        queryStatus == null
+          ? "/organizations"
+          : `/organizations?status=${queryStatus}`;
       const dataResponse = await axiosInstanceAuthorization.get(endpoint);
       return dataResponse.data;
     },
   });
 
   const noData = () => {
-    if (dataEvent && dataEvent.length === 0) {
+    if (dataOrg && dataOrg.length === 0) {
       return (
         <Alert status="warning">
           <AlertIcon />
@@ -64,19 +59,14 @@ export function TableEvent() {
 
   return (
     <>
-      <TableContainer>       
-
+      <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>No</Th>
               <Th></Th>
-              <Th>Event Name</Th>
-              <Th>Location</Th>
-              <Th>
-                <Text>Event Start</Text>
-                <Text>Event End</Text>
-              </Th>
+              <Th>Organization</Th>
+              <Th>Total Event</Th>
               <Th>
                 <Center>Status</Center>
               </Th>
@@ -84,33 +74,28 @@ export function TableEvent() {
             </Tr>
           </Thead>
           <Tbody>
-            {dataEvent &&
-              dataEvent.map((event, index) => (
-                <Tr key={event.id_event}>
+            {dataOrg &&
+              dataOrg.map((org, index) => (
+                <Tr key={org.id_organization}>
                   <Td>{index + 1}</Td>
                   <Td>
                     <Image
-                      src={event.event_image}
-                      alt={event.event_name}
+                      src={org.logo}
+                      alt={org.organization_name}
                       boxSize="50px"
                       borderRadius="30%"
                       objectFit="cover"
                     />
                   </Td>
-                  <Td>{event.event_name}</Td>
                   <Td>
-                    {event.location}
-                    <a href={event.url_google_map} target="_blank">
-                      <ExternalLinkIcon />
-                    </a>
+                    <Text as="b">{org.organization_name}</Text>
+                    <Text>{org.email}</Text>
+                    <Text>{org.phone}</Text>
                   </Td>
-                  <Td>
-                    <Text>{formatDate(event.event_start)}</Text>
-                    <Text>{formatDate(event.event_end)}</Text>
-                  </Td>
+                  <Td>{org.events.length}</Td>
                   <Td>
                     <Center>
-                      {event.status === 0 ? (
+                      {org.status === 0 ? (
                         <Box
                           as="button"
                           borderRadius="md"
@@ -121,18 +106,18 @@ export function TableEvent() {
                         >
                           <Text>Pending</Text>
                         </Box>
-                      ) : event.status === 1 ? (
+                      ) : org.status === 1 ? (
                         <Box
                           as="button"
                           borderRadius="md"
-                          bg={secondaryColor}
+                          bg='red'
                           color="white"
                           px={4}
                           h={8}
                         >
-                          <Text>Rejected</Text>
+                          <Text>Banned</Text>
                         </Box>
-                      ) : event.status === 2 ? (
+                      ) : org.status === 2 ? (
                         <Box
                           as="button"
                           borderRadius="md"
@@ -151,7 +136,7 @@ export function TableEvent() {
                       <Button
                         mx={2}
                         onClick={() =>
-                          router.push(`/admin/event/${event.id_event}`)
+                          router.push(`/admin/organization/${org.id_organization}`)
                         }
                       >
                         Detail

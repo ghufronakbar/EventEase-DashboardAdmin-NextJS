@@ -2,9 +2,9 @@ import { HeadAdmin } from "@/components/HeadAdmin";
 import { Container, Flex } from "@chakra-ui/react";
 import { withAuth } from "@/lib/authorization";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { FormTicketEdit } from "@/components/form/FormTicketEdit";
+import { DetailOrganization } from "@/components/detail/DetailOrganization";
 
-function TicketId() {
+function EventID() {
   return (
     <>
       <HeadAdmin />
@@ -12,7 +12,7 @@ function TicketId() {
         <Flex>
           <SidebarMenu flex={1} />
           <Container maxW="80%">
-            <FormTicketEdit />
+            <DetailOrganization />
           </Container>
         </Flex>
       </main>
@@ -20,4 +20,4 @@ function TicketId() {
   );
 }
 
-export default withAuth(TicketId);
+export default withAuth(EventID);

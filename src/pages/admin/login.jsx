@@ -27,7 +27,7 @@ function Copyright(props) {
   return (
     <Text align="center" {...props}>
       {"Copyright © "}
-      <Link color="blue.500" href={process.env.BASE_URL}>
+      <Link color="blue.500" href={process.env.NEXT_PUBLIC_URL}>
         Event Ease
       </Link>{" "}
       {new Date().getFullYear()}
@@ -101,7 +101,7 @@ export default function SignInSide() {
           <Flex align="center" justify="center" direction="column">
             <Avatar bg={primaryColor} icon={<LockIcon />} mb={4} />
             <Heading as="h1" size="lg" mb={6}>
-              Login as Admin Organization
+              Login as Admin
             </Heading>
             <Box as="form" w="100%" onSubmit={handleLogin}>
               <VStack spacing={4}>
@@ -128,16 +128,7 @@ export default function SignInSide() {
                   Login
                 </Button>
               </VStack>
-              <Flex justify="space-between" mt={4}>
-                <HStack
-                  onClick={() => {
-                    router.push(`/admin/register`);
-                  }}
-                >
-                  <Text>Don't have an account?</Text>
-                  <Text color={primaryColor}>Register</Text>
-                </HStack>
-              </Flex>
+              
               <Copyright mt={8} />
             </Box>
           </Flex>
