@@ -35,32 +35,32 @@ export function SidebarMenu() {
               📑 All Event
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?time=past&status=`)}
+              onClick={() => router.push(`/admin/event?time=past`)}
             >
               ⏳ Past Event
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?time=on-going&status=`)}
+              onClick={() => router.push(`/admin/event?time=on-going`)}
             >
               🎊 On Going
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?time=soon&status=`)}
+              onClick={() => router.push(`/admin/event?time=soon`)}
             >
               🕝 Coming Soon
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?status=0&time=`)}
+              onClick={() => router.push(`/admin/event?status=0`)}
             >
               ⌚ Waiting for approval
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?status=1&time=`)}
+              onClick={() => router.push(`/admin/event?status=1`)}
             >
               ❌ Rejected by Admin
             </MenuItem>
             <MenuItem
-              onClick={() => router.push(`/admin/event?status=2&time=`)}
+              onClick={() => router.push(`/admin/event?status=2`)}
             >
               ✅ Approved
             </MenuItem>
